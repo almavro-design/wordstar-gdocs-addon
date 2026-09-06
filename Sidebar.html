@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 10px;
+      background: #f5f5f5;
+    }
+    h2 {
+      color: #1f1f1f;
+      font-size: 18px;
+      margin-top: 0;
+    }
+    .section {
+      background: white;
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .command-list {
+      font-size: 12px;
+      line-height: 1.6;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .command-item {
+      padding: 4px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .cmd-key {
+      font-family: monospace;
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: bold;
+      color: #d32f2f;
+    }
+    .cmd-desc {
+      color: #666;
+      margin-left: 8px;
+    }
+    button {
+      background: #1f73e6;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+    button:hover {
+      background: #1765cc;
+    }
+    .status {
+      color: #1565c0;
+      font-size: 12px;
+      margin-top: 8px;
+      padding: 6px;
+      background: #e3f2fd;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <h2>WordStar Commands</h2>
+  
+  <div class="section">
+    <h3>Navigation</h3>
+    <div class="command-list">
+      <div class="command-item"><span class="cmd-key">Ctrl+A</span><span class="cmd-desc">Left one character</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+D</span><span class="cmd-desc">Right one character</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+E</span><span class="cmd-desc">Up one line</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+X</span><span class="cmd-desc">Down one line</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+S</span><span class="cmd-desc">Left one word</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+F</span><span class="cmd-desc">Right one word</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+R</span><span class="cmd-desc">Page up</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+C</span><span class="cmd-desc">Page down</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+W</span><span class="cmd-desc">Scroll up (cursor stays)</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+Z</span><span class="cmd-desc">Scroll down (cursor stays)</span></div>
+    </div>
+  </div>
+  
+  <div class="section">
+    <h3>Line Operations (Ctrl+Q...)</h3>
+    <div class="command-list">
+      <div class="command-item"><span class="cmd-key">Ctrl+Q+R</span><span class="cmd-desc">Beginning of line</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+Q+C</span><span class="cmd-desc">End of line</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+Q+H</span><span class="cmd-desc">Delete to beginning of line</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+Q+Y</span><span class="cmd-desc">Delete to end of line</span></div>
+    </div>
+  </div>
+  
+  <div class="section">
+    <h3>Editing</h3>
+    <div class="command-list">
+      <div class="command-item"><span class="cmd-key">Ctrl+H</span><span class="cmd-desc">Delete character backward</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+G</span><span class="cmd-desc">Delete character forward</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+T</span><span class="cmd-desc">Delete word forward</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+Y</span><span class="cmd-desc">Delete entire line</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+N</span><span class="cmd-desc">Insert line break</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+J</span><span class="cmd-desc">Insert hard return</span></div>
+      <div class="command-item"><span class="cmd-key">Ctrl+V</span><span class="cmd-desc">Toggle overwrite mode</span></div>
+    </div>
+  </div>
+  
+  <div class="section">
+    <h3>Mode & Status</h3>
+    <button onclick="google.script.run.toggleOverwrite()">Toggle Overwrite Mode</button>
+    <div class="status">Overwrite mode: <span id="overwrite-status">OFF</span></div>
+  </div>
+  
+  <div class="section">
+    <p style="font-size: 11px; color: #999;">
+      <strong>Note:</strong> This is an alpha version. Some commands (especially Ctrl+W, Ctrl+Z scroll, and multi-key sequences) need client-side JavaScript enhancement.
+    </p>
+  </div>
+  
+  <script>
+    function updateStatus() {
+      google.script.run.getOverwriteMode(function(result) {
+        document.getElementById('overwrite-status').textContent = result ? 'ON' : 'OFF';
+      });
+    }
+    
+    // Update status on load and periodically
+    updateStatus();
+    setInterval(updateStatus, 2000);
+  </script>
+</body>
+</html>
